@@ -1,0 +1,635 @@
+
+LedBlinkWithDummyDelay.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .isr_vector   000000c0  08000000  08000000  00010000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .text         000002e8  080000c0  080000c0  000100c0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .rodata       00000000  080003a8  080003a8  00020004  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .ARM.extab    00000000  080003a8  080003a8  00020004  2**0
+                  CONTENTS
+  4 .ARM          00000000  080003a8  080003a8  00020004  2**0
+                  CONTENTS
+  5 .preinit_array 00000000  080003a8  080003a8  00020004  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .init_array   00000004  080003a8  080003a8  000103a8  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  7 .fini_array   00000004  080003ac  080003ac  000103ac  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  8 .data         00000004  20000000  080003b0  00020000  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  9 .bss          00000020  20000004  080003b4  00020004  2**2
+                  ALLOC
+ 10 ._user_heap_stack 00000604  20000024  080003b4  00020024  2**0
+                  ALLOC
+ 11 .ARM.attributes 00000028  00000000  00000000  00020004  2**0
+                  CONTENTS, READONLY
+ 12 .debug_info   00000cd3  00000000  00000000  0002002c  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_abbrev 000004dc  00000000  00000000  00020cff  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_aranges 00000198  00000000  00000000  000211e0  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_ranges 00000150  00000000  00000000  00021378  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_macro  0000f98a  00000000  00000000  000214c8  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .debug_line   00001ef8  00000000  00000000  00030e52  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 18 .debug_str    0005fabb  00000000  00000000  00032d4a  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 19 .comment      00000050  00000000  00000000  00092805  2**0
+                  CONTENTS, READONLY
+ 20 .debug_frame  0000043c  00000000  00000000  00092858  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .text:
+
+080000c0 <__do_global_dtors_aux>:
+ 80000c0:	b510      	push	{r4, lr}
+ 80000c2:	4c06      	ldr	r4, [pc, #24]	; (80000dc <__do_global_dtors_aux+0x1c>)
+ 80000c4:	7823      	ldrb	r3, [r4, #0]
+ 80000c6:	2b00      	cmp	r3, #0
+ 80000c8:	d107      	bne.n	80000da <__do_global_dtors_aux+0x1a>
+ 80000ca:	4b05      	ldr	r3, [pc, #20]	; (80000e0 <__do_global_dtors_aux+0x20>)
+ 80000cc:	2b00      	cmp	r3, #0
+ 80000ce:	d002      	beq.n	80000d6 <__do_global_dtors_aux+0x16>
+ 80000d0:	4804      	ldr	r0, [pc, #16]	; (80000e4 <__do_global_dtors_aux+0x24>)
+ 80000d2:	e000      	b.n	80000d6 <__do_global_dtors_aux+0x16>
+ 80000d4:	bf00      	nop
+ 80000d6:	2301      	movs	r3, #1
+ 80000d8:	7023      	strb	r3, [r4, #0]
+ 80000da:	bd10      	pop	{r4, pc}
+ 80000dc:	20000004 	.word	0x20000004
+ 80000e0:	00000000 	.word	0x00000000
+ 80000e4:	08000390 	.word	0x08000390
+
+080000e8 <frame_dummy>:
+ 80000e8:	4b04      	ldr	r3, [pc, #16]	; (80000fc <frame_dummy+0x14>)
+ 80000ea:	b510      	push	{r4, lr}
+ 80000ec:	2b00      	cmp	r3, #0
+ 80000ee:	d003      	beq.n	80000f8 <frame_dummy+0x10>
+ 80000f0:	4903      	ldr	r1, [pc, #12]	; (8000100 <frame_dummy+0x18>)
+ 80000f2:	4804      	ldr	r0, [pc, #16]	; (8000104 <frame_dummy+0x1c>)
+ 80000f4:	e000      	b.n	80000f8 <frame_dummy+0x10>
+ 80000f6:	bf00      	nop
+ 80000f8:	bd10      	pop	{r4, pc}
+ 80000fa:	46c0      	nop			; (mov r8, r8)
+ 80000fc:	00000000 	.word	0x00000000
+ 8000100:	20000008 	.word	0x20000008
+ 8000104:	08000390 	.word	0x08000390
+
+08000108 <main>:
+
+void SystemClock_Config(void);
+void GPIO_C_Config(void);
+void dummyDelay(void);
+int main(void)
+{
+ 8000108:	b580      	push	{r7, lr}
+ 800010a:	af00      	add	r7, sp, #0
+
+  SystemClock_Config();
+ 800010c:	f000 f828 	bl	8000160 <SystemClock_Config>
+  GPIO_C_Config();
+ 8000110:	f000 f870 	bl	80001f4 <GPIO_C_Config>
+  while (1)
+  {
+	  GPIOC->ODR |= (1 << 8);
+ 8000114:	4b0f      	ldr	r3, [pc, #60]	; (8000154 <main+0x4c>)
+ 8000116:	695a      	ldr	r2, [r3, #20]
+ 8000118:	4b0e      	ldr	r3, [pc, #56]	; (8000154 <main+0x4c>)
+ 800011a:	2180      	movs	r1, #128	; 0x80
+ 800011c:	0049      	lsls	r1, r1, #1
+ 800011e:	430a      	orrs	r2, r1
+ 8000120:	615a      	str	r2, [r3, #20]
+	  GPIOC->ODR |= (1 << 9);
+ 8000122:	4b0c      	ldr	r3, [pc, #48]	; (8000154 <main+0x4c>)
+ 8000124:	695a      	ldr	r2, [r3, #20]
+ 8000126:	4b0b      	ldr	r3, [pc, #44]	; (8000154 <main+0x4c>)
+ 8000128:	2180      	movs	r1, #128	; 0x80
+ 800012a:	0089      	lsls	r1, r1, #2
+ 800012c:	430a      	orrs	r2, r1
+ 800012e:	615a      	str	r2, [r3, #20]
+	  dummyDelay();
+ 8000130:	f000 f89e 	bl	8000270 <dummyDelay>
+	  GPIOC->ODR &= ~(1 << 8);
+ 8000134:	4b07      	ldr	r3, [pc, #28]	; (8000154 <main+0x4c>)
+ 8000136:	695a      	ldr	r2, [r3, #20]
+ 8000138:	4b06      	ldr	r3, [pc, #24]	; (8000154 <main+0x4c>)
+ 800013a:	4907      	ldr	r1, [pc, #28]	; (8000158 <main+0x50>)
+ 800013c:	400a      	ands	r2, r1
+ 800013e:	615a      	str	r2, [r3, #20]
+	  GPIOC->ODR &= ~(1 << 9);
+ 8000140:	4b04      	ldr	r3, [pc, #16]	; (8000154 <main+0x4c>)
+ 8000142:	695a      	ldr	r2, [r3, #20]
+ 8000144:	4b03      	ldr	r3, [pc, #12]	; (8000154 <main+0x4c>)
+ 8000146:	4905      	ldr	r1, [pc, #20]	; (800015c <main+0x54>)
+ 8000148:	400a      	ands	r2, r1
+ 800014a:	615a      	str	r2, [r3, #20]
+	  dummyDelay();
+ 800014c:	f000 f890 	bl	8000270 <dummyDelay>
+	  GPIOC->ODR |= (1 << 8);
+ 8000150:	e7e0      	b.n	8000114 <main+0xc>
+ 8000152:	46c0      	nop			; (mov r8, r8)
+ 8000154:	48000800 	.word	0x48000800
+ 8000158:	fffffeff 	.word	0xfffffeff
+ 800015c:	fffffdff 	.word	0xfffffdff
+
+08000160 <SystemClock_Config>:
+  }
+}
+
+// High Speed External Oscillator is used to get better result.
+void SystemClock_Config(void)
+{
+ 8000160:	b580      	push	{r7, lr}
+ 8000162:	af00      	add	r7, sp, #0
+  RCC->CR &= 0x00000083;
+ 8000164:	4b22      	ldr	r3, [pc, #136]	; (80001f0 <SystemClock_Config+0x90>)
+ 8000166:	681a      	ldr	r2, [r3, #0]
+ 8000168:	4b21      	ldr	r3, [pc, #132]	; (80001f0 <SystemClock_Config+0x90>)
+ 800016a:	2183      	movs	r1, #131	; 0x83
+ 800016c:	400a      	ands	r2, r1
+ 800016e:	601a      	str	r2, [r3, #0]
+  // OFF the HSI oscillator.
+  // RCC->CR &= ~(1<<0);
+  RCC->CR &= ~RCC_CR_HSION;
+ 8000170:	4b1f      	ldr	r3, [pc, #124]	; (80001f0 <SystemClock_Config+0x90>)
+ 8000172:	681a      	ldr	r2, [r3, #0]
+ 8000174:	4b1e      	ldr	r3, [pc, #120]	; (80001f0 <SystemClock_Config+0x90>)
+ 8000176:	2101      	movs	r1, #1
+ 8000178:	438a      	bics	r2, r1
+ 800017a:	601a      	str	r2, [r3, #0]
+  // ON the HSE oscillator. (More accurate.)
+  //RCC->CR |= 1 << 16;
+  RCC->CR |= RCC_CR_HSEON;
+ 800017c:	4b1c      	ldr	r3, [pc, #112]	; (80001f0 <SystemClock_Config+0x90>)
+ 800017e:	681a      	ldr	r2, [r3, #0]
+ 8000180:	4b1b      	ldr	r3, [pc, #108]	; (80001f0 <SystemClock_Config+0x90>)
+ 8000182:	2180      	movs	r1, #128	; 0x80
+ 8000184:	0249      	lsls	r1, r1, #9
+ 8000186:	430a      	orrs	r2, r1
+ 8000188:	601a      	str	r2, [r3, #0]
+  // Enable Clock security system
+  // RCC->CR |= 1 << 19;
+  RCC->CR |= RCC_CR_CSSON;
+ 800018a:	4b19      	ldr	r3, [pc, #100]	; (80001f0 <SystemClock_Config+0x90>)
+ 800018c:	681a      	ldr	r2, [r3, #0]
+ 800018e:	4b18      	ldr	r3, [pc, #96]	; (80001f0 <SystemClock_Config+0x90>)
+ 8000190:	2180      	movs	r1, #128	; 0x80
+ 8000192:	0309      	lsls	r1, r1, #12
+ 8000194:	430a      	orrs	r2, r1
+ 8000196:	601a      	str	r2, [r3, #0]
+  while((RCC->CR && RCC_CR_HSERDY) != 1)
+ 8000198:	46c0      	nop			; (mov r8, r8)
+ 800019a:	4b15      	ldr	r3, [pc, #84]	; (80001f0 <SystemClock_Config+0x90>)
+ 800019c:	681b      	ldr	r3, [r3, #0]
+ 800019e:	2b00      	cmp	r3, #0
+ 80001a0:	d0fb      	beq.n	800019a <SystemClock_Config+0x3a>
+  {
+	  // Waiting untill clock is active
+  }
+  // 4 ve 12 (PLL Multiplexer bu)
+  RCC->CFGR &= 0x00000000;
+ 80001a2:	4b13      	ldr	r3, [pc, #76]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001a4:	685b      	ldr	r3, [r3, #4]
+ 80001a6:	4b12      	ldr	r3, [pc, #72]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001a8:	2200      	movs	r2, #0
+ 80001aa:	605a      	str	r2, [r3, #4]
+  RCC->CFGR |= (0b10 << RCC_CFGR_PLLSRC_Pos);
+ 80001ac:	4b10      	ldr	r3, [pc, #64]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001ae:	685a      	ldr	r2, [r3, #4]
+ 80001b0:	4b0f      	ldr	r3, [pc, #60]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001b2:	2180      	movs	r1, #128	; 0x80
+ 80001b4:	0289      	lsls	r1, r1, #10
+ 80001b6:	430a      	orrs	r2, r1
+ 80001b8:	605a      	str	r2, [r3, #4]
+  RCC->CFGR |= (0b1010 << RCC_CFGR_PLLMUL_Pos);
+ 80001ba:	4b0d      	ldr	r3, [pc, #52]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001bc:	685a      	ldr	r2, [r3, #4]
+ 80001be:	4b0c      	ldr	r3, [pc, #48]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001c0:	21a0      	movs	r1, #160	; 0xa0
+ 80001c2:	0389      	lsls	r1, r1, #14
+ 80001c4:	430a      	orrs	r2, r1
+ 80001c6:	605a      	str	r2, [r3, #4]
+  RCC->CFGR |= (RCC_CFGR_MCO_SYSCLK);
+ 80001c8:	4b09      	ldr	r3, [pc, #36]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001ca:	685a      	ldr	r2, [r3, #4]
+ 80001cc:	4b08      	ldr	r3, [pc, #32]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001ce:	2180      	movs	r1, #128	; 0x80
+ 80001d0:	04c9      	lsls	r1, r1, #19
+ 80001d2:	430a      	orrs	r2, r1
+ 80001d4:	605a      	str	r2, [r3, #4]
+  // PLL is selected as system clock.
+  // RCC->CFGR |= (1 << 1);
+  RCC->CFGR |= RCC_CFGR_SW_PLL;
+ 80001d6:	4b06      	ldr	r3, [pc, #24]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001d8:	685a      	ldr	r2, [r3, #4]
+ 80001da:	4b05      	ldr	r3, [pc, #20]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001dc:	2102      	movs	r1, #2
+ 80001de:	430a      	orrs	r2, r1
+ 80001e0:	605a      	str	r2, [r3, #4]
+  // Check if PLL used as system clock.
+  while(RCC->CFGR && RCC_CFGR_SWS_PLL == 0);
+ 80001e2:	46c0      	nop			; (mov r8, r8)
+ 80001e4:	4b02      	ldr	r3, [pc, #8]	; (80001f0 <SystemClock_Config+0x90>)
+ 80001e6:	685b      	ldr	r3, [r3, #4]
+  // System clock is now 48MHz.
+
+}
+ 80001e8:	46c0      	nop			; (mov r8, r8)
+ 80001ea:	46bd      	mov	sp, r7
+ 80001ec:	bd80      	pop	{r7, pc}
+ 80001ee:	46c0      	nop			; (mov r8, r8)
+ 80001f0:	40021000 	.word	0x40021000
+
+080001f4 <GPIO_C_Config>:
+void GPIO_C_Config(void)
+{
+ 80001f4:	b580      	push	{r7, lr}
+ 80001f6:	af00      	add	r7, sp, #0
+	// PC9 and PC8 are the LEDs pins.
+	// GPIO_C clock source is from AHB.
+	RCC->AHBENR |= (1 << 19);
+ 80001f8:	4b17      	ldr	r3, [pc, #92]	; (8000258 <GPIO_C_Config+0x64>)
+ 80001fa:	695a      	ldr	r2, [r3, #20]
+ 80001fc:	4b16      	ldr	r3, [pc, #88]	; (8000258 <GPIO_C_Config+0x64>)
+ 80001fe:	2180      	movs	r1, #128	; 0x80
+ 8000200:	0309      	lsls	r1, r1, #12
+ 8000202:	430a      	orrs	r2, r1
+ 8000204:	615a      	str	r2, [r3, #20]
+	// Set PC8 and PC9 as General purpose output mode.
+	GPIOC->MODER |= (1 << 18);
+ 8000206:	4b15      	ldr	r3, [pc, #84]	; (800025c <GPIO_C_Config+0x68>)
+ 8000208:	681a      	ldr	r2, [r3, #0]
+ 800020a:	4b14      	ldr	r3, [pc, #80]	; (800025c <GPIO_C_Config+0x68>)
+ 800020c:	2180      	movs	r1, #128	; 0x80
+ 800020e:	02c9      	lsls	r1, r1, #11
+ 8000210:	430a      	orrs	r2, r1
+ 8000212:	601a      	str	r2, [r3, #0]
+	GPIOC->MODER &= ~(1 << 19);
+ 8000214:	4b11      	ldr	r3, [pc, #68]	; (800025c <GPIO_C_Config+0x68>)
+ 8000216:	681a      	ldr	r2, [r3, #0]
+ 8000218:	4b10      	ldr	r3, [pc, #64]	; (800025c <GPIO_C_Config+0x68>)
+ 800021a:	4911      	ldr	r1, [pc, #68]	; (8000260 <GPIO_C_Config+0x6c>)
+ 800021c:	400a      	ands	r2, r1
+ 800021e:	601a      	str	r2, [r3, #0]
+	GPIOC->MODER |= (1 << 16);
+ 8000220:	4b0e      	ldr	r3, [pc, #56]	; (800025c <GPIO_C_Config+0x68>)
+ 8000222:	681a      	ldr	r2, [r3, #0]
+ 8000224:	4b0d      	ldr	r3, [pc, #52]	; (800025c <GPIO_C_Config+0x68>)
+ 8000226:	2180      	movs	r1, #128	; 0x80
+ 8000228:	0249      	lsls	r1, r1, #9
+ 800022a:	430a      	orrs	r2, r1
+ 800022c:	601a      	str	r2, [r3, #0]
+	GPIOC->MODER &= ~(1 << 17);
+ 800022e:	4b0b      	ldr	r3, [pc, #44]	; (800025c <GPIO_C_Config+0x68>)
+ 8000230:	681a      	ldr	r2, [r3, #0]
+ 8000232:	4b0a      	ldr	r3, [pc, #40]	; (800025c <GPIO_C_Config+0x68>)
+ 8000234:	490b      	ldr	r1, [pc, #44]	; (8000264 <GPIO_C_Config+0x70>)
+ 8000236:	400a      	ands	r2, r1
+ 8000238:	601a      	str	r2, [r3, #0]
+	// Push-Pull so it is reset no need to do it.
+	GPIOC->OTYPER &= ~(1 << 8);
+ 800023a:	4b08      	ldr	r3, [pc, #32]	; (800025c <GPIO_C_Config+0x68>)
+ 800023c:	685a      	ldr	r2, [r3, #4]
+ 800023e:	4b07      	ldr	r3, [pc, #28]	; (800025c <GPIO_C_Config+0x68>)
+ 8000240:	4909      	ldr	r1, [pc, #36]	; (8000268 <GPIO_C_Config+0x74>)
+ 8000242:	400a      	ands	r2, r1
+ 8000244:	605a      	str	r2, [r3, #4]
+	GPIOC->OTYPER &= ~(1 << 9);
+ 8000246:	4b05      	ldr	r3, [pc, #20]	; (800025c <GPIO_C_Config+0x68>)
+ 8000248:	685a      	ldr	r2, [r3, #4]
+ 800024a:	4b04      	ldr	r3, [pc, #16]	; (800025c <GPIO_C_Config+0x68>)
+ 800024c:	4907      	ldr	r1, [pc, #28]	; (800026c <GPIO_C_Config+0x78>)
+ 800024e:	400a      	ands	r2, r1
+ 8000250:	605a      	str	r2, [r3, #4]
+}
+ 8000252:	46c0      	nop			; (mov r8, r8)
+ 8000254:	46bd      	mov	sp, r7
+ 8000256:	bd80      	pop	{r7, pc}
+ 8000258:	40021000 	.word	0x40021000
+ 800025c:	48000800 	.word	0x48000800
+ 8000260:	fff7ffff 	.word	0xfff7ffff
+ 8000264:	fffdffff 	.word	0xfffdffff
+ 8000268:	fffffeff 	.word	0xfffffeff
+ 800026c:	fffffdff 	.word	0xfffffdff
+
+08000270 <dummyDelay>:
+void dummyDelay(void)
+{
+ 8000270:	b580      	push	{r7, lr}
+ 8000272:	b082      	sub	sp, #8
+ 8000274:	af00      	add	r7, sp, #0
+	for(int i = 0; i < 100000; i++);
+ 8000276:	2300      	movs	r3, #0
+ 8000278:	607b      	str	r3, [r7, #4]
+ 800027a:	e002      	b.n	8000282 <dummyDelay+0x12>
+ 800027c:	687b      	ldr	r3, [r7, #4]
+ 800027e:	3301      	adds	r3, #1
+ 8000280:	607b      	str	r3, [r7, #4]
+ 8000282:	687b      	ldr	r3, [r7, #4]
+ 8000284:	4a03      	ldr	r2, [pc, #12]	; (8000294 <dummyDelay+0x24>)
+ 8000286:	4293      	cmp	r3, r2
+ 8000288:	ddf8      	ble.n	800027c <dummyDelay+0xc>
+}
+ 800028a:	46c0      	nop			; (mov r8, r8)
+ 800028c:	46c0      	nop			; (mov r8, r8)
+ 800028e:	46bd      	mov	sp, r7
+ 8000290:	b002      	add	sp, #8
+ 8000292:	bd80      	pop	{r7, pc}
+ 8000294:	0001869f 	.word	0x0001869f
+
+08000298 <NMI_Handler>:
+/*           Cortex-M0 Processor Interruption and Exception Handlers          */
+/******************************************************************************/
+/**
+ * @brief This function handles Non maskable interrupt.
+ */
+void NMI_Handler(void) {
+ 8000298:	b580      	push	{r7, lr}
+ 800029a:	af00      	add	r7, sp, #0
+	/* USER CODE BEGIN NonMaskableInt_IRQn 0 */
+
+	/* USER CODE END NonMaskableInt_IRQn 0 */
+	/* USER CODE BEGIN NonMaskableInt_IRQn 1 */
+	while (1) {
+ 800029c:	e7fe      	b.n	800029c <NMI_Handler+0x4>
+
+0800029e <HardFault_Handler>:
+}
+
+/**
+ * @brief This function handles Hard fault interrupt.
+ */
+void HardFault_Handler(void) {
+ 800029e:	b580      	push	{r7, lr}
+ 80002a0:	af00      	add	r7, sp, #0
+	/* USER CODE BEGIN HardFault_IRQn 0 */
+
+	/* USER CODE END HardFault_IRQn 0 */
+	while (1) {
+ 80002a2:	e7fe      	b.n	80002a2 <HardFault_Handler+0x4>
+
+080002a4 <SVC_Handler>:
+}
+
+/**
+ * @brief This function handles System service call via SWI instruction.
+ */
+void SVC_Handler(void) {
+ 80002a4:	b580      	push	{r7, lr}
+ 80002a6:	af00      	add	r7, sp, #0
+
+	/* USER CODE END SVC_IRQn 0 */
+	/* USER CODE BEGIN SVC_IRQn 1 */
+
+	/* USER CODE END SVC_IRQn 1 */
+}
+ 80002a8:	46c0      	nop			; (mov r8, r8)
+ 80002aa:	46bd      	mov	sp, r7
+ 80002ac:	bd80      	pop	{r7, pc}
+
+080002ae <PendSV_Handler>:
+
+/**
+ * @brief This function handles Pendable request for system service.
+ */
+void PendSV_Handler(void) {
+ 80002ae:	b580      	push	{r7, lr}
+ 80002b0:	af00      	add	r7, sp, #0
+
+	/* USER CODE END PendSV_IRQn 0 */
+	/* USER CODE BEGIN PendSV_IRQn 1 */
+
+	/* USER CODE END PendSV_IRQn 1 */
+}
+ 80002b2:	46c0      	nop			; (mov r8, r8)
+ 80002b4:	46bd      	mov	sp, r7
+ 80002b6:	bd80      	pop	{r7, pc}
+
+080002b8 <SysTick_Handler>:
+
+/**
+ * @brief This function handles System tick timer.
+ */
+void SysTick_Handler(void) {
+ 80002b8:	b580      	push	{r7, lr}
+ 80002ba:	af00      	add	r7, sp, #0
+	/* USER CODE BEGIN SysTick_IRQn 0 */
+
+	/* USER CODE END SysTick_IRQn 0 */
+	HAL_IncTick();
+ 80002bc:	f000 f832 	bl	8000324 <HAL_IncTick>
+	/* USER CODE BEGIN SysTick_IRQn 1 */
+
+	/* USER CODE END SysTick_IRQn 1 */
+}
+ 80002c0:	46c0      	nop			; (mov r8, r8)
+ 80002c2:	46bd      	mov	sp, r7
+ 80002c4:	bd80      	pop	{r7, pc}
+
+080002c6 <SystemInit>:
+  * @brief  Setup the microcontroller system
+  * @param  None
+  * @retval None
+  */
+void SystemInit(void)
+{
+ 80002c6:	b580      	push	{r7, lr}
+ 80002c8:	af00      	add	r7, sp, #0
+                         before branch to main program. This call is made inside
+                         the "startup_stm32f0xx.s" file.
+                         User can setups the default system clock (System clock source, PLL Multiplier
+                         and Divider factors, AHB/APBx prescalers and Flash settings).
+   */
+}
+ 80002ca:	46c0      	nop			; (mov r8, r8)
+ 80002cc:	46bd      	mov	sp, r7
+ 80002ce:	bd80      	pop	{r7, pc}
+
+080002d0 <Reset_Handler>:
+
+  .section .text.Reset_Handler
+  .weak Reset_Handler
+  .type Reset_Handler, %function
+Reset_Handler:
+  ldr   r0, =_estack
+ 80002d0:	480d      	ldr	r0, [pc, #52]	; (8000308 <LoopForever+0x2>)
+  mov   sp, r0          /* set stack pointer */
+ 80002d2:	4685      	mov	sp, r0
+
+/* Copy the data segment initializers from flash to SRAM */
+  ldr r0, =_sdata
+ 80002d4:	480d      	ldr	r0, [pc, #52]	; (800030c <LoopForever+0x6>)
+  ldr r1, =_edata
+ 80002d6:	490e      	ldr	r1, [pc, #56]	; (8000310 <LoopForever+0xa>)
+  ldr r2, =_sidata
+ 80002d8:	4a0e      	ldr	r2, [pc, #56]	; (8000314 <LoopForever+0xe>)
+  movs r3, #0
+ 80002da:	2300      	movs	r3, #0
+  b LoopCopyDataInit
+ 80002dc:	e002      	b.n	80002e4 <LoopCopyDataInit>
+
+080002de <CopyDataInit>:
+
+CopyDataInit:
+  ldr r4, [r2, r3]
+ 80002de:	58d4      	ldr	r4, [r2, r3]
+  str r4, [r0, r3]
+ 80002e0:	50c4      	str	r4, [r0, r3]
+  adds r3, r3, #4
+ 80002e2:	3304      	adds	r3, #4
+
+080002e4 <LoopCopyDataInit>:
+
+LoopCopyDataInit:
+  adds r4, r0, r3
+ 80002e4:	18c4      	adds	r4, r0, r3
+  cmp r4, r1
+ 80002e6:	428c      	cmp	r4, r1
+  bcc CopyDataInit
+ 80002e8:	d3f9      	bcc.n	80002de <CopyDataInit>
+  
+/* Zero fill the bss segment. */
+  ldr r2, =_sbss
+ 80002ea:	4a0b      	ldr	r2, [pc, #44]	; (8000318 <LoopForever+0x12>)
+  ldr r4, =_ebss
+ 80002ec:	4c0b      	ldr	r4, [pc, #44]	; (800031c <LoopForever+0x16>)
+  movs r3, #0
+ 80002ee:	2300      	movs	r3, #0
+  b LoopFillZerobss
+ 80002f0:	e001      	b.n	80002f6 <LoopFillZerobss>
+
+080002f2 <FillZerobss>:
+
+FillZerobss:
+  str  r3, [r2]
+ 80002f2:	6013      	str	r3, [r2, #0]
+  adds r2, r2, #4
+ 80002f4:	3204      	adds	r2, #4
+
+080002f6 <LoopFillZerobss>:
+
+LoopFillZerobss:
+  cmp r2, r4
+ 80002f6:	42a2      	cmp	r2, r4
+  bcc FillZerobss
+ 80002f8:	d3fb      	bcc.n	80002f2 <FillZerobss>
+
+/* Call the clock system intitialization function.*/
+  bl  SystemInit
+ 80002fa:	f7ff ffe4 	bl	80002c6 <SystemInit>
+/* Call static constructors */
+  bl __libc_init_array
+ 80002fe:	f000 f823 	bl	8000348 <__libc_init_array>
+/* Call the application's entry point.*/
+  bl main
+ 8000302:	f7ff ff01 	bl	8000108 <main>
+
+08000306 <LoopForever>:
+
+LoopForever:
+    b LoopForever
+ 8000306:	e7fe      	b.n	8000306 <LoopForever>
+  ldr   r0, =_estack
+ 8000308:	20002000 	.word	0x20002000
+  ldr r0, =_sdata
+ 800030c:	20000000 	.word	0x20000000
+  ldr r1, =_edata
+ 8000310:	20000004 	.word	0x20000004
+  ldr r2, =_sidata
+ 8000314:	080003b0 	.word	0x080003b0
+  ldr r2, =_sbss
+ 8000318:	20000004 	.word	0x20000004
+  ldr r4, =_ebss
+ 800031c:	20000024 	.word	0x20000024
+
+08000320 <ADC1_COMP_IRQHandler>:
+ * @retval : None
+*/
+    .section .text.Default_Handler,"ax",%progbits
+Default_Handler:
+Infinite_Loop:
+  b Infinite_Loop
+ 8000320:	e7fe      	b.n	8000320 <ADC1_COMP_IRQHandler>
+	...
+
+08000324 <HAL_IncTick>:
+ *       in SysTick ISR.
+ * @note This function is declared as __weak to be overwritten in case of other 
+ *       implementations in user file.
+ * @retval None
+ */
+__weak void HAL_IncTick(void) {
+ 8000324:	b580      	push	{r7, lr}
+ 8000326:	af00      	add	r7, sp, #0
+	uwTick += uwTickFreq;
+ 8000328:	4b05      	ldr	r3, [pc, #20]	; (8000340 <HAL_IncTick+0x1c>)
+ 800032a:	781b      	ldrb	r3, [r3, #0]
+ 800032c:	001a      	movs	r2, r3
+ 800032e:	4b05      	ldr	r3, [pc, #20]	; (8000344 <HAL_IncTick+0x20>)
+ 8000330:	681b      	ldr	r3, [r3, #0]
+ 8000332:	18d2      	adds	r2, r2, r3
+ 8000334:	4b03      	ldr	r3, [pc, #12]	; (8000344 <HAL_IncTick+0x20>)
+ 8000336:	601a      	str	r2, [r3, #0]
+}
+ 8000338:	46c0      	nop			; (mov r8, r8)
+ 800033a:	46bd      	mov	sp, r7
+ 800033c:	bd80      	pop	{r7, pc}
+ 800033e:	46c0      	nop			; (mov r8, r8)
+ 8000340:	20000000 	.word	0x20000000
+ 8000344:	20000020 	.word	0x20000020
+
+08000348 <__libc_init_array>:
+ 8000348:	b570      	push	{r4, r5, r6, lr}
+ 800034a:	2600      	movs	r6, #0
+ 800034c:	4d0c      	ldr	r5, [pc, #48]	; (8000380 <__libc_init_array+0x38>)
+ 800034e:	4c0d      	ldr	r4, [pc, #52]	; (8000384 <__libc_init_array+0x3c>)
+ 8000350:	1b64      	subs	r4, r4, r5
+ 8000352:	10a4      	asrs	r4, r4, #2
+ 8000354:	42a6      	cmp	r6, r4
+ 8000356:	d109      	bne.n	800036c <__libc_init_array+0x24>
+ 8000358:	2600      	movs	r6, #0
+ 800035a:	f000 f819 	bl	8000390 <_init>
+ 800035e:	4d0a      	ldr	r5, [pc, #40]	; (8000388 <__libc_init_array+0x40>)
+ 8000360:	4c0a      	ldr	r4, [pc, #40]	; (800038c <__libc_init_array+0x44>)
+ 8000362:	1b64      	subs	r4, r4, r5
+ 8000364:	10a4      	asrs	r4, r4, #2
+ 8000366:	42a6      	cmp	r6, r4
+ 8000368:	d105      	bne.n	8000376 <__libc_init_array+0x2e>
+ 800036a:	bd70      	pop	{r4, r5, r6, pc}
+ 800036c:	00b3      	lsls	r3, r6, #2
+ 800036e:	58eb      	ldr	r3, [r5, r3]
+ 8000370:	4798      	blx	r3
+ 8000372:	3601      	adds	r6, #1
+ 8000374:	e7ee      	b.n	8000354 <__libc_init_array+0xc>
+ 8000376:	00b3      	lsls	r3, r6, #2
+ 8000378:	58eb      	ldr	r3, [r5, r3]
+ 800037a:	4798      	blx	r3
+ 800037c:	3601      	adds	r6, #1
+ 800037e:	e7f2      	b.n	8000366 <__libc_init_array+0x1e>
+ 8000380:	080003a8 	.word	0x080003a8
+ 8000384:	080003a8 	.word	0x080003a8
+ 8000388:	080003a8 	.word	0x080003a8
+ 800038c:	080003ac 	.word	0x080003ac
+
+08000390 <_init>:
+ 8000390:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8000392:	46c0      	nop			; (mov r8, r8)
+ 8000394:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8000396:	bc08      	pop	{r3}
+ 8000398:	469e      	mov	lr, r3
+ 800039a:	4770      	bx	lr
+
+0800039c <_fini>:
+ 800039c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 800039e:	46c0      	nop			; (mov r8, r8)
+ 80003a0:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80003a2:	bc08      	pop	{r3}
+ 80003a4:	469e      	mov	lr, r3
+ 80003a6:	4770      	bx	lr

@@ -1,0 +1,16 @@
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:158:19:HAL_FLASHEx_Erase	32	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:239:19:HAL_FLASHEx_Erase_IT	24	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:308:19:HAL_FLASHEx_OBErase	24	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:354:19:HAL_FLASHEx_OBProgram	32	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:423:6:HAL_FLASHEx_OBGetConfig	16	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:444:10:HAL_FLASHEx_OBGetUserData	24	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:477:13:FLASH_MassErase	8	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:497:26:FLASH_OB_EnableWRP	40	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:610:26:FLASH_OB_DisableWRP	40	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:720:26:FLASH_OB_RDP_LevelConfig	32	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:768:26:FLASH_OB_UserConfig	32	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:821:26:FLASH_OB_ProgramData	32	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:852:17:FLASH_OB_GetWRP	8	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:865:17:FLASH_OB_GetRDP	16	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:886:16:FLASH_OB_GetUser	8	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c:915:6:FLASH_PageErase	16	static
